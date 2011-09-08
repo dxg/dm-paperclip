@@ -103,12 +103,12 @@ module Paperclip
   class << self
 
     # Provides configurability to Paperclip. There are a number of options available, such as:
-    # * whiny: Will raise an error if Paperclip cannot process thumbnails of 
+    # * whiny: Will raise an error if Paperclip cannot process thumbnails of
     #   an uploaded image. Defaults to true.
     # * log: Logs progress to the Rails log. Uses ActiveRecord's logger, so honors
     #   log levels, etc. Defaults to true.
     # * command_path: Defines the path at which to find the command line
-    #   programs if they are not visible to Rails the system's search path. Defaults to 
+    #   programs if they are not visible to Rails the system's search path. Defaults to
     #   nil, which uses the first executable found in the user's search path.
     # * image_magick_path: Deprecated alias of command_path.
     def options
@@ -144,7 +144,7 @@ module Paperclip
     # expected_outcodes, a PaperclipCommandLineError will be raised. Generally
     # a code of 0 is expected, but a list of codes may be passed if necessary.
     #
-    # This method can log the command being run when 
+    # This method can log the command being run when
     # Paperclip.options[:log_command] is set to true (defaults to false). This
     # will only log if logging in general is set to true as well.
     def run cmd, params = "", expected_outcodes = 0
@@ -201,10 +201,10 @@ module Paperclip
 
   class NotIdentifiedByImageMagickError < PaperclipError #:nodoc:
   end
-  
+
   class InfiniteInterpolationError < PaperclipError #:nodoc:
   end
-  
+
   module Resource
 
     def self.included(base)
@@ -226,41 +226,41 @@ module Paperclip
 
   module ClassMethods
     # +has_attached_file+ gives the class it is called on an attribute that maps to a file. This
-    # is typically a file stored somewhere on the filesystem and has been uploaded by a user. 
+    # is typically a file stored somewhere on the filesystem and has been uploaded by a user.
     # The attribute returns a Paperclip::Attachment object which handles the management of
-    # that file. The intent is to make the attachment as much like a normal attribute. The 
-    # thumbnails will be created when the new file is assigned, but they will *not* be saved 
-    # until +save+ is called on the record. Likewise, if the attribute is set to +nil+ is 
-    # called on it, the attachment will *not* be deleted until +save+ is called. See the 
-    # Paperclip::Attachment documentation for more specifics. There are a number of options 
+    # that file. The intent is to make the attachment as much like a normal attribute. The
+    # thumbnails will be created when the new file is assigned, but they will *not* be saved
+    # until +save+ is called on the record. Likewise, if the attribute is set to +nil+ is
+    # called on it, the attachment will *not* be deleted until +save+ is called. See the
+    # Paperclip::Attachment documentation for more specifics. There are a number of options
     # you can set to change the behavior of a Paperclip attachment:
     # * +url+: The full URL of where the attachment is publically accessible. This can just
     #   as easily point to a directory served directly through Apache as it can to an action
     #   that can control permissions. You can specify the full domain and path, but usually
-    #   just an absolute path is sufficient. The leading slash must be included manually for 
+    #   just an absolute path is sufficient. The leading slash must be included manually for
     #   absolute paths. The default value is "/:class/:attachment/:id/:style_:filename". See
     #   Paperclip::Attachment#interpolate for more information on variable interpolaton.
     #     :url => "/:attachment/:id/:style_:basename:extension"
     #     :url => "http://some.other.host/stuff/:class/:id_:extension"
-    # * +default_url+: The URL that will be returned if there is no attachment assigned. 
-    #   This field is interpolated just as the url is. The default value is 
+    # * +default_url+: The URL that will be returned if there is no attachment assigned.
+    #   This field is interpolated just as the url is. The default value is
     #   "/:class/:attachment/missing_:style.png"
     #     has_attached_file :avatar, :default_url => "/images/default_:style_avatar.png"
     #     User.new.avatar_url(:small) # => "/images/default_small_avatar.png"
-    # * +styles+: A hash of thumbnail styles and their geometries. You can find more about 
-    #   geometry strings at the ImageMagick website 
+    # * +styles+: A hash of thumbnail styles and their geometries. You can find more about
+    #   geometry strings at the ImageMagick website
     #   (http://www.imagemagick.org/script/command-line-options.php#resize). Paperclip
-    #   also adds the "#" option (e.g. "50x50#"), which will resize the image to fit maximally 
-    #   inside the dimensions and then crop the rest off (weighted at the center). The 
+    #   also adds the "#" option (e.g. "50x50#"), which will resize the image to fit maximally
+    #   inside the dimensions and then crop the rest off (weighted at the center). The
     #   default value is to generate no thumbnails.
-    # * +default_style+: The thumbnail style that will be used by default URLs. 
+    # * +default_style+: The thumbnail style that will be used by default URLs.
     #   Defaults to +original+.
     #     has_attached_file :avatar, :styles => { :normal => "100x100#" },
     #                       :default_style => :normal
     #     user.avatar.url # => "/avatars/23/normal_me.png"
     # * +whiny_thumbnails+: Will raise an error if Paperclip cannot process thumbnails of an
-    #   uploaded image. This will ovrride the global setting for this attachment. 
-    #   Defaults to true. 
+    #   uploaded image. This will ovrride the global setting for this attachment.
+    #   Defaults to true.
     # * +convert_options+: When creating thumbnails, use this free-form options
     #   field to pass in various convert command options.  Typical options are "-strip" to
     #   remove all Exif data from the image (save space for thumbnails and avatars) or
@@ -323,7 +323,7 @@ module Paperclip
       end
 
       if Paperclip.config.use_dm_validations
-        add_validator_to_context(opts_from_validator_args([name]), [name], Paperclip::Validate::CopyAttachmentErrors)
+        validators.add(Paperclip::Validate::CopyAttachmentErrors, name)
       end
 
     end
