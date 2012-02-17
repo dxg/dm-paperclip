@@ -41,7 +41,7 @@ module Paperclip
   # http://marsorange.com/archives/of-mogrify-ruby-tempfile-dynamic-class-definitions
   class Tempfile < ::Tempfile
     # This is Ruby 1.8.7's implementation.
-    if RUBY_VERSION <= "1.8.6"
+    if RUBY_VERSION <= "1.8.6" || RUBY_PLATFORM =~ /java/
       def make_tmpname(basename, n)
         case basename
         when Array
@@ -49,11 +49,11 @@ module Paperclip
         else
           prefix, suffix = basename, ''
         end
-
+        
         t = Time.now.strftime("%y%m%d")
         path = "#{prefix}#{t}-#{$$}-#{rand(0x100000000).to_s(36)}-#{n}#{suffix}"
       end
     end
   end
-
+  
 end
