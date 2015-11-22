@@ -323,7 +323,7 @@ module Paperclip
       end
 
       if Paperclip.config.use_dm_validations
-        validators.add(Paperclip::Validate::CopyAttachmentErrors, name)
+        validators.add(Paperclip::Validate::CopyAttachmentErrors, [name])
       end
 
     end

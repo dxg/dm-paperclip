@@ -78,7 +78,7 @@ module Paperclip
 
       if uploaded_file.respond_to?(:[])
         uploaded_file = uploaded_file.to_mash if uploaded_file.respond_to?(:to_mash)
-        
+
         @queued_for_write[:original]   = uploaded_file['tempfile']
         instance_write(:file_name,       uploaded_file['filename'].strip.gsub(/[^\w\d\.\-]+/, '_'))
         instance_write(:content_type,    uploaded_file['content_type'] ? uploaded_file['content_type'].strip : uploaded_file['tempfile'].content_type.to_s.strip)
